@@ -11,6 +11,7 @@ import PackagePlugin
 
 @main
 public struct Formatter: CommandPlugin {
+    public init() { }
     @available(macOS 11, *)
     public func performCommand(context: PackagePlugin.PluginContext, arguments: [String]) async throws {
         let swiftFormatTool = try context.tool(named: "swift-format")
