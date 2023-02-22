@@ -6,6 +6,9 @@ import PackageDescription
 let package = Package(
     name: "Formatter",
     platforms: [.macOS(.v13)],
+    products: [
+        .plugin(name: "Formatter", targets: ["Formatter"])
+    ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/apple/swift-format", from: "0.50700.1")

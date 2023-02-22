@@ -10,9 +10,9 @@ import PackagePlugin
 
 
 @main
-struct Formatter: CommandPlugin {
+public struct Formatter: CommandPlugin {
     @available(macOS 11, *)
-    func performCommand(context: PackagePlugin.PluginContext, arguments: [String]) async throws {
+    public func performCommand(context: PackagePlugin.PluginContext, arguments: [String]) async throws {
         let swiftFormatTool = try context.tool(named: "swift-format")
         // Optional
         let configFile = context.package.directory.appending(".swift-format.json")
