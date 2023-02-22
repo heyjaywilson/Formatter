@@ -15,16 +15,13 @@ public struct Formatter: CommandPlugin {
     @available(macOS 11, *)
     public func performCommand(context: PackagePlugin.PluginContext, arguments: [String]) async throws {
         let swiftFormatTool = try context.tool(named: "swift-format")
-        // Optional
-        let configFile = context.package.directory.appending(".swift-format.json")
         // Setup Swift format execution
         if #available(macOS 13.0, *) {
             let format = URL(filePath: swiftFormatTool.path.string)
             for target in context.package.targets {
                 let formatArgs = [
-                    "--configuration \(configFile.string)",
-                    "--i",
-                    "--r",
+                    "-i",
+                    "-r",
                     target.directory.string
                 ]
 
