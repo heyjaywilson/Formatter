@@ -5,7 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "Formatter",
-    platforms: [.macOS(.v13)],
+    platforms: [.macOS(.v10_15)],
     products: [
         .plugin(name: "Formatter", targets: ["Formatter"])
     ],

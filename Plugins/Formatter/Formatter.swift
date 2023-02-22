@@ -12,20 +12,23 @@ import PackagePlugin
 @main
 public struct Formatter: CommandPlugin {
     public init() { }
-    @available(macOS 11, *)
     public func performCommand(context: PackagePlugin.PluginContext, arguments: [String]) async throws {
         let swiftFormatTool = try context.tool(named: "swift-format")
         // Setup Swift format execution
-        if #available(macOS 13.0, *) {
             let format = URL(filePath: swiftFormatTool.path.string)
             for target in context.package.targets {
+                guard let target = target as? SourceModuleTarget else { continue }
                 let formatArgs = [
                     "-i",
                     "-r",
-                    target.directory.string
+                    "\(target.directory)"
                 ]
 
-                let process = try Process.run(format, arguments: formatArgs)
+                let process = Process()
+                process.executableURL = format
+                process.arguments = formatArgs
+
+                try process.run()
                 process.waitUntilExit()
 
                 if process.terminationReason == .exit && process.terminationStatus == 0 {
@@ -35,7 +38,6 @@ public struct Formatter: CommandPlugin {
                     let problem = "\(process.terminationReason):\(process.terminationStatus)"
                     Diagnostics.error("swift-format invocation failed: \(problem)")
                 }
-            }
         }
     }
 }
